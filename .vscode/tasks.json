@@ -46,12 +46,12 @@
             "dockerBuild": {
                 "tag": "wrkshpmodernizingenterpriseappswithcontainers:dev",
                 "target": "base",
-                "dockerfile": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api/Dockerfile",
+                "dockerfile": "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui/Dockerfile",
                 "context": "${workspaceFolder}",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api/TasksTracker.TasksManager.Backend.Api.csproj"
+                "appProject": "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui/TasksTracker.WebPortal.Frontend.Ui.csproj"
             }
         },
         {
@@ -62,7 +62,7 @@
             ],
             "dockerBuild": {
                 "tag": "wrkshpmodernizingenterpriseappswithcontainers:latest",
-                "dockerfile": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api/Dockerfile",
+                "dockerfile": "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui/Dockerfile",
                 "context": "${workspaceFolder}",
                 "platform": {
                     "os": "linux",
@@ -71,7 +71,7 @@
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api/TasksTracker.TasksManager.Backend.Api.csproj"
+                "appProject": "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui/TasksTracker.WebPortal.Frontend.Ui.csproj"
             }
         },
         {
@@ -82,7 +82,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api/TasksTracker.TasksManager.Backend.Api.csproj",
+                "appProject": "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui/TasksTracker.WebPortal.Frontend.Ui.csproj",
                 "enableDebugging": true
             }
         },
@@ -94,7 +94,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api/TasksTracker.TasksManager.Backend.Api.csproj"
+                "appProject": "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui/TasksTracker.WebPortal.Frontend.Ui.csproj"
             }
         }
     ]

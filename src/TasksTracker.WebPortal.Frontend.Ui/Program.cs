@@ -3,6 +3,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+builder.Services.AddHttpClient("BackEndApiExternal", httpClient =>
+{
+    var backendApiBaseUrlExternalHttp = builder.Configuration.GetValue<string>("BackendApiConfig:BaseUrlExternalHttp");
+
+    if (!string.IsNullOrEmpty(backendApiBaseUrlExternalHttp)) {
+        httpClient.BaseAddress = new Uri(backendApiBaseUrlExternalHttp);
+    } else {
+        throw new("BackendApiConfig:BaseUrlExternalHttp is not defined in App Settings.");
+    }
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -5,7 +5,7 @@ EXPOSE 5000
 ENV ASPNETCORE_URLS=http://+:5000
 
 USER app
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /src
 COPY ["src/TasksTracker.TasksManager.Backend.Api/TasksTracker.TasksManager.Backend.Api.csproj", "src/TasksTracker.TasksManager.Backend.Api/"]
