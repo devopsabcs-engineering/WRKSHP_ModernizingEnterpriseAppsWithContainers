@@ -1,20 +1,19 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Azure Container Apps Workshop
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+https://azure.github.io/aca-dotnet-workshop/
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+There is no doubt that building containerized applications and following a microservices architecture is one of the most common software architecture patterns observed in the past couple of years.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Microsoft Azure offers different services to package, deploy, and manage cloud-native applications, each of which serves a certain purpose and has its own pros and cons. This page provides a good comparison between the available services to host and manage cloud-native containerized applications in Azure.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+Whereas building cloud-native apps on Azure Kubernetes Service (AKS) is powerful, there is a bit of a learning curve needed when it comes to creating and configuring the cluster, configuring networking between microservices, services discovery, certificates provisioning, and, lastly, managing the cluster over the lifetime of the application.
+
+In this workshop, we will be focusing on a new containerization service offered by Microsoft called Azure Container Apps (ACA). Microsoft announced the public preview of Azure Container Apps in November 2021, and in May 2022 it announced the General Availability of Azure Container Apps. In brief, Azure Container Apps is a fully managed, serverless, Kubernetes-based container runtime for building and running cloud-native applications which focuses on the business logic of the apps rather than on cloud infrastructure management.
+
+Contributions¶
+We are most grateful for community involvement. Please see CONTRIBUTING.md for details. Thank you!
+
+Acknowledgment¶
+The workshop's material, concepts, and code samples draw inspiration from a collection of blog articles authored by Taiseer Joudeh and published on his personal blog. The workshop authors have worked collaboratively to modify and augment the content, resulting in the current version of the workshop.
+
+2024-04-12
