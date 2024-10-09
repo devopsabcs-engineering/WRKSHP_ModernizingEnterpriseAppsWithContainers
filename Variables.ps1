@@ -8,6 +8,11 @@ Set-Variable -Scope Global -Name AZURE_SUBSCRIPTION_ID -Value "64c3d212-40ed-4c6
 Set-Variable -Scope Global -Name BACKEND_API_EXTERNAL_BASE_URL -Value "https://tasksmanager-backend-api.jollyriver-20f834af.eastus.azurecontainerapps.io"
 Set-Variable -Scope Global -Name BACKEND_API_INTERNAL_BASE_URL -Value "https://tasksmanager-backend-api.internal.jollyriver-20f834af.eastus.azurecontainerapps.io"
 Set-Variable -Scope Global -Name BACKEND_API_NAME -Value "tasksmanager-backend-api"
+Set-Variable -Scope Global -Name COSMOS_DB_ACCOUNT -Value "cosmos-tasks-tracker-state-store-mop3f6"
+Set-Variable -Scope Global -Name COSMOS_DB_CONTAINER -Value "taskscollection"
+Set-Variable -Scope Global -Name COSMOS_DB_DBNAME -Value "tasksmanagerdb"
+Set-Variable -Scope Global -Name COSMOS_DB_ENDPOINT -Value "https://cosmos-tasks-tracker-state-store-mop3f6.documents.azure.com:443/"
+Set-Variable -Scope Global -Name COSMOS_DB_PRIMARY_MASTER_KEY -Value "IICiyJImfZpuCfddL7KaLP9DzjSISD9SA5cSuaen9ZdFSnzGE9UOOaHw9l3JpIRqRWCxm5cpkMUEACDbykYlcw=="
 Set-Variable -Scope Global -Name ENVIRONMENT -Value "cae-tasks-tracker"
 Set-Variable -Scope Global -Name FRONTEND_UI_BASE_URL -Value "https://tasksmanager-frontend-webapp.jollyriver-20f834af.eastus.azurecontainerapps.io"
 Set-Variable -Scope Global -Name FRONTEND_UI_BASE_URL_LOCAL -Value "https://localhost:7258"
@@ -22,4 +27,4 @@ Set-Variable -Scope Global -Name WORKSPACE_ID -Value "c49f8aed-334c-4592-9719-74
 Set-Variable -Scope Global -Name WORKSPACE_NAME -Value "log-tasks-tracker-mop3f6"
 Set-Variable -Scope Global -Name WORKSPACE_SECRET -Value "fh4KFmnlNG9vcLcgBapwAHw16MrdbuvMNXW+UXFynSa/nutcswMq1SYbJflkKGLa4VElygs6ya+sV3931dq+8w=="
 Set-Variable -Scope Global -Name TODAY -Value (Get-Date -Format 'yyyyMMdd')
-Write-Host "Set 23 variables."
+Write-Host "Set 28 variables."

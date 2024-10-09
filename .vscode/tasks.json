@@ -2,6 +2,62 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "appId": "tasksmanager-backend-api",
+            "appPort": 7005,
+            "httpPort": 3500,
+            "grpcPort": 50001,
+            "appSsl": true,
+            "label": "backend-api-dapr-debug",
+            "type": "dapr",
+            "dependsOn": "build-backend-api",
+            // Uncomment this line after adding Azure Cosmos DB in module 4
+            "componentsPath": "./components"
+        },
+        {
+            "appId": "tasksmanager-backend-api",
+            "label": "daprd-down-backend-api",
+            "type": "daprd-down"
+        },
+        {
+            "appId": "tasksmanager-frontend-webapp",
+            "appPort": 7258,
+            "httpPort": 3501,
+            "grpcPort": 50002,
+            "appSsl": true,
+            "label": "webapp-ui-dapr-debug",
+            "type": "dapr",
+            "dependsOn": "build-webapp-ui"
+        },
+        {
+            "appId": "tasksmanager-frontend-webapp",
+            "label": "webapp-ui-daprd-down",
+            "type": "daprd-down"
+        },
+        {
+            "label": "build-backend-api",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api/TasksTracker.TasksManager.Backend.Api.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-webapp-ui",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui/TasksTracker.WebPortal.Frontend.Ui.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "build",
             "command": "dotnet",
             "type": "process",
