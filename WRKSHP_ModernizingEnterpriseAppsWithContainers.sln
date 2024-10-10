@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TasksTracker.TasksManager.B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TasksTracker.WebPortal.Frontend.Ui", "src\TasksTracker.WebPortal.Frontend.Ui\TasksTracker.WebPortal.Frontend.Ui.csproj", "{40AE398F-4FE7-47D0-82A1-86C0712698D7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TasksTracker.Processor.Backend.Svc", "src\TasksTracker.Processor.Backend.Svc\TasksTracker.Processor.Backend.Svc.csproj", "{41E0204C-BC2D-4EA1-A020-A223AA93357F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{40AE398F-4FE7-47D0-82A1-86C0712698D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40AE398F-4FE7-47D0-82A1-86C0712698D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40AE398F-4FE7-47D0-82A1-86C0712698D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41E0204C-BC2D-4EA1-A020-A223AA93357F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41E0204C-BC2D-4EA1-A020-A223AA93357F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41E0204C-BC2D-4EA1-A020-A223AA93357F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41E0204C-BC2D-4EA1-A020-A223AA93357F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E2773F41-EE8F-4554-A08F-2AA5D3E95267} = {EA308F68-2C41-4612-ABA9-E3AD055E4000}
 		{40AE398F-4FE7-47D0-82A1-86C0712698D7} = {EA308F68-2C41-4612-ABA9-E3AD055E4000}
+		{41E0204C-BC2D-4EA1-A020-A223AA93357F} = {EA308F68-2C41-4612-ABA9-E3AD055E4000}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAC7F364-1DEE-4498-A20C-280709EC5425}
