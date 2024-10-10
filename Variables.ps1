@@ -29,6 +29,7 @@ Set-Variable -Scope Global -Name RANDOM_STRING -Value "mop3f6"
 Set-Variable -Scope Global -Name RESOURCE_GROUP -Value "rg-tasks-tracker-mop3f6"
 Set-Variable -Scope Global -Name REVISION_NAME -Value "tasksmanager-backend-api--v20241010-2"
 Set-Variable -Scope Global -Name ROLE_ID -Value "00000000-0000-0000-0000-000000000002"
+Set-Variable -Scope Global -Name SERVICE_BUS_CONNECTION_STRING -Value "Endpoint=sb://sbns-taskstracker-mop3f6.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ziYk25vxQ9CKL5cgF03gWPNQoly2MmJmC+ASbOIx3hQ="
 Set-Variable -Scope Global -Name SERVICE_BUS_NAMESPACE_NAME -Value "sbns-taskstracker-mop3f6"
 Set-Variable -Scope Global -Name SERVICE_BUS_TOPIC_NAME -Value "tasksavedtopic"
 Set-Variable -Scope Global -Name SERVICE_BUS_TOPIC_SUBSCRIPTION -Value "sbts-tasks-processor"
@@ -42,4 +43,4 @@ Set-Variable -Scope Global -Name WORKSPACE_ID -Value "c49f8aed-334c-4592-9719-74
 Set-Variable -Scope Global -Name WORKSPACE_NAME -Value "log-tasks-tracker-mop3f6"
 Set-Variable -Scope Global -Name WORKSPACE_SECRET -Value "fh4KFmnlNG9vcLcgBapwAHw16MrdbuvMNXW+UXFynSa/nutcswMq1SYbJflkKGLa4VElygs6ya+sV3931dq+8w=="
 Set-Variable -Scope Global -Name TODAY -Value (Get-Date -Format 'yyyyMMdd')
-Write-Host "Set 43 variables."
+Write-Host "Set 44 variables."
