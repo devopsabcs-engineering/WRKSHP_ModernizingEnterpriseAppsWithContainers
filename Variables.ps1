@@ -9,6 +9,7 @@ Set-Variable -Scope Global -Name BACKEND_API_EXTERNAL_BASE_URL -Value "https://t
 Set-Variable -Scope Global -Name BACKEND_API_INTERNAL_BASE_URL -Value "https://tasksmanager-backend-api.internal.jollyriver-20f834af.eastus.azurecontainerapps.io"
 Set-Variable -Scope Global -Name BACKEND_API_NAME -Value "tasksmanager-backend-api"
 Set-Variable -Scope Global -Name BACKEND_API_PRINCIPAL_ID -Value "ed8464be-4ee4-446e-8f60-fbe69941d707"
+Set-Variable -Scope Global -Name BACKEND_SERVICE_APP_PORT -Value 7204
 Set-Variable -Scope Global -Name COSMOS_DB_ACCOUNT -Value "cosmos-tasks-tracker-state-store-mop3f6"
 Set-Variable -Scope Global -Name COSMOS_DB_CONTAINER -Value "taskscollection"
 Set-Variable -Scope Global -Name COSMOS_DB_DBNAME -Value "tasksmanagerdb"
@@ -29,4 +30,4 @@ Set-Variable -Scope Global -Name WORKSPACE_ID -Value "c49f8aed-334c-4592-9719-74
 Set-Variable -Scope Global -Name WORKSPACE_NAME -Value "log-tasks-tracker-mop3f6"
 Set-Variable -Scope Global -Name WORKSPACE_SECRET -Value "fh4KFmnlNG9vcLcgBapwAHw16MrdbuvMNXW+UXFynSa/nutcswMq1SYbJflkKGLa4VElygs6ya+sV3931dq+8w=="
 Set-Variable -Scope Global -Name TODAY -Value (Get-Date -Format 'yyyyMMdd')
-Write-Host "Set 30 variables."
+Write-Host "Set 31 variables."
