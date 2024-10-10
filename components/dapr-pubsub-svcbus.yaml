@@ -1,0 +1,15 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: dapr-pubsub-servicebus
+spec:
+  type: pubsub.azure.servicebus.topics
+  version: v1
+  metadata:
+    - name: connectionString # Used for local dev testing.
+      value: "Endpoint=sb://sbns-taskstracker-mop3f6.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ziYk25vxQ9CKL5cgF03gWPNQoly2MmJmC+ASbOIx3hQ="
+    - name: consumerID
+      value: "sbts-tasks-processor"
+scopes:
+  - tasksmanager-backend-api
+  - tasksmanager-backend-processor

@@ -1,0 +1,12 @@
+# pubsub.yaml for Azure Service Bus component
+componentType: pubsub.azure.servicebus.topics
+version: v1
+metadata:
+  - name: namespaceName
+    value: "sbns-taskstracker-mop3f6.servicebus.windows.net"
+  - name: consumerID
+    value: "sbts-tasks-processor"
+# Application scopes
+scopes:
+  - tasksmanager-backend-api
+  - tasksmanager-backend-processor
