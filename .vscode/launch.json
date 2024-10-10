@@ -2,6 +2,71 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch (web app)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-backend-api",
+            "program": "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui/bin/Debug/net8.0/TasksTracker.WebPortal.Frontend.Ui.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Launch (backend api)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-webapp-ui",
+            "program": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api/bin/Debug/net8.0/TasksTracker.TasksManager.Backend.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Launch (background processor)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-processor-svc",
+            "program": "${workspaceFolder}/src/TasksTracker.Processor.Backend.Svc/bin/Debug/net8.0/TasksTracker.Processor.Backend.Svc.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/TasksTracker.Processor.Backend.Svc",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        },
+        {
             "name": "Launch (backend api) with Dapr",
             "type": "coreclr",
             "request": "launch",
@@ -44,13 +109,13 @@
             "postDebugTask": "webapp-ui-daprd-down"
         },
         {
-            "name": ".NET Core Launch (web)",
+            "name": "Launch (background processor) with Dapr",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api/bin/Debug/net8.0/TasksTracker.TasksManager.Backend.Api.dll",
+            "preLaunchTask": "processor-svc-dapr-debug",
+            "program": "${workspaceFolder}/src/TasksTracker.Processor.Backend.Svc/bin/Debug/net8.0/TasksTracker.Processor.Backend.Svc.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/TasksTracker.TasksManager.Backend.Api",
+            "cwd": "${workspaceFolder}/src/TasksTracker.Processor.Backend.Svc",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -61,29 +126,26 @@
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach"
-        },
-        {
-            "name": "Docker .NET Launch",
-            "type": "docker",
-            "request": "launch",
-            "preLaunchTask": "docker-run: debug",
-            "netCore": {
-                "appProject": "${workspaceFolder}/src/TasksTracker.WebPortal.Frontend.Ui/TasksTracker.WebPortal.Frontend.Ui.csproj"
-            }
+            },
+            "postDebugTask": "processor-svc-daprd-down"
         }
     ],
     "compounds": [
         {
+            "name": "RunAll",
+            "configurations": [
+                "Launch (web app)",
+                "Launch (backend api)",
+                "Launch (background processor)",
+            ],
+            "stopAll": true
+        },
+        {
             "name": "RunAll with Dapr",
             "configurations": [
                 "Launch (backend api) with Dapr",
-                "Launch (web app) with Dapr"
+                "Launch (web app) with Dapr",
+                "Launch (background processor) with Dapr",
             ],
             "stopAll": true
         }
