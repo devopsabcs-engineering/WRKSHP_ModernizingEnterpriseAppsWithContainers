@@ -1,0 +1,59 @@
+{
+    "containerRegistryName": {
+        "value": "cracaworkshopek002"
+    },
+    "backendProcessorServiceImage": {
+        "value": "cracaworkshopek002.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest"
+    },
+    "backendApiServiceImage": {
+        "value": "cracaworkshopek002.azurecr.io/tasksmanager/tasksmanager-backend-api:latest"
+    },
+    "frontendWebAppServiceImage": {
+        "value": "cracaworkshopek002.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest"
+    },
+    "backendProcessorServiceName": {
+        "value": "tasksmanager-backend-processor"
+    },
+    "backendApiServiceName": {
+        "value": "tasksmanager-backend-api"
+    },
+    "frontendWebAppServiceName": {
+        "value": "tasksmanager-frontend-webapp"
+    },
+    "serviceBusTopicName": {
+        "value": "tasksavedtopic"
+    },
+    "serviceBusTopicAuthorizationRuleName": {
+        "value": "tasksmanager-topic-rule"
+    },
+    "cosmosDbDatabaseName": {
+        "value": "tasksmanagerdb"
+    },
+    "cosmosDbCollectionName": {
+        "value": "taskscollection"
+    },
+    "externalTasksQueueName": {
+        "value": "external-tasks-queue"
+    },
+    "externalTasksContainerBlobName": {
+        "value": "externaltaskscontainer"
+    },
+    "externalStorageKeySecretName": {
+        "value": "external-azure-storage-key"
+    },
+    "sendGridEmailFrom": {
+        "value": "admin@MngEnvMCAP675646.onmicrosoft.com"
+    },
+    "sendGridEmailFromName": {
+        "value": "Tasks Manager"
+    },
+    "sendGridKeySecretValue": {
+        "value": "SG8!jhsgYddds"
+    },
+    "scheduledJobCron": {
+        "value": "5 0 * * *"
+    },
+    "secretStoreComponentName": {
+        "value": "secretstoreakv"
+    }
+}
