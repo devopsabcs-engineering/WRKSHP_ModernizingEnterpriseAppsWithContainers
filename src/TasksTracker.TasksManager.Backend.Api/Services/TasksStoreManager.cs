@@ -1,4 +1,7 @@
 using Dapr.Client;
+using System.Text.Json;
+using System.Text.Encodings.Web;
+using System.Text.Json.Serialization;
 using TasksTracker.TasksManager.Backend.Api.Models;
 
 namespace TasksTracker.TasksManager.Backend.Api.Services
@@ -30,7 +33,6 @@ namespace TasksTracker.TasksManager.Backend.Api.Services
 
             _logger.LogInformation("Save a new task with name: '{0}' to state store", taskModel.TaskName);
             await _daprClient.SaveStateAsync<TaskModel>(STORE_NAME, taskModel.TaskId.ToString(), taskModel);
-            await PublishTaskSavedEvent(taskModel);
             return taskModel.TaskId;
         }
 
@@ -85,20 +87,50 @@ namespace TasksTracker.TasksManager.Backend.Api.Services
                 taskModel.TaskAssignedTo = assignedTo;
                 taskModel.TaskDueDate = dueDate;
                 await _daprClient.SaveStateAsync<TaskModel>(STORE_NAME, taskModel.TaskId.ToString(), taskModel);
-                if (!taskModel.TaskAssignedTo.Equals(currentAssignee, StringComparison.OrdinalIgnoreCase))
-                {
-                    await PublishTaskSavedEvent(taskModel);
-                }
                 return true;
             }
             return false;
         }
 
-        private async Task PublishTaskSavedEvent(TaskModel taskModel)
+        public async Task<List<TaskModel>> GetYesterdaysDueTasks()
         {
-            _logger.LogInformation("Publish Task Saved event for task with Id: '{0}' and Name: '{1}' for Assignee: '{2}'",
-            taskModel.TaskId, taskModel.TaskName, taskModel.TaskAssignedTo);
-            await _daprClient.PublishEventAsync("dapr-pubsub-servicebus", "tasksavedtopic", taskModel);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true,
+                Converters =
+                {
+                    new JsonStringEnumConverter(),
+                    new DateTimeConverter("yyyy-MM-ddTHH:mm:ss")
+                },
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+            var yesterday = DateTime.Today.AddDays(-1);
+
+            var jsonDate = JsonSerializer.Serialize(yesterday, options);
+
+            _logger.LogInformation("Getting overdue tasks for yesterday date: '{0}'", jsonDate);
+
+            var query = "{" +
+                    "\"filter\": {" +
+                        "\"EQ\": { \"taskDueDate\": " + jsonDate + " }" +
+                    "}}";
+
+            var queryResponse = await _daprClient.QueryStateAsync<TaskModel>(STORE_NAME, query);
+            var tasksList = queryResponse.Results.Select(q => q.Data).Where(q=>q.IsCompleted==false && q.IsOverDue==false).OrderBy(o=>o.TaskCreatedOn);
+            return tasksList.ToList();
+        }
+
+        public async Task MarkOverdueTasks(List<TaskModel> overDueTasksList)
+        {
+            foreach (var taskModel in overDueTasksList)
+            {
+                _logger.LogInformation("Mark task with Id: '{0}' as OverDue task", taskModel.TaskId);
+                taskModel.IsOverDue = true;
+                await _daprClient.SaveStateAsync<TaskModel>(STORE_NAME, taskModel.TaskId.ToString(), taskModel);
+            }
         }
     }
 }

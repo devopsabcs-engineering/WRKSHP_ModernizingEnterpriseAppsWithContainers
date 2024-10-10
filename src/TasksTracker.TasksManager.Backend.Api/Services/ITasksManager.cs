@@ -10,5 +10,7 @@ namespace TasksTracker.TasksManager.Backend.Api.Services
         Task<bool> UpdateTask(Guid taskId, string taskName, string assignedTo, DateTime dueDate);
         Task<bool> MarkTaskCompleted(Guid taskId);
         Task<bool> DeleteTask(Guid taskId);
+        Task MarkOverdueTasks(List<TaskModel> overdueTasksList);
+        Task<List<TaskModel>> GetYesterdaysDueTasks();
     }
 }
