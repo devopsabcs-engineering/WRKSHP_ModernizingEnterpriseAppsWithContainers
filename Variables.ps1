@@ -28,6 +28,8 @@ Set-Variable -Scope Global -Name ROLE_ID -Value "00000000-0000-0000-0000-0000000
 Set-Variable -Scope Global -Name SERVICE_BUS_NAMESPACE_NAME -Value "sbns-taskstracker-mop3f6"
 Set-Variable -Scope Global -Name SERVICE_BUS_TOPIC_NAME -Value "tasksavedtopic"
 Set-Variable -Scope Global -Name SERVICE_BUS_TOPIC_SUBSCRIPTION -Value "sbts-tasks-processor"
+Set-Variable -Scope Global -Name STORAGE_ACCOUNT_NAME -Value "sttaskstrackermop3f6"
+Set-Variable -Scope Global -Name STORAGE_ACCOUNT_KEY -Value "EDZQi1UjJbPrGRXUpB3hFB8XBwgORXKuP7yzKJgRISYVENaxgfG0NxJGHdikUAykruKSY+nLj4+S+AStTsK88g=="
 Set-Variable -Scope Global -Name TARGET_PORT -Value 5000
 Set-Variable -Scope Global -Name UI_APP_PORT -Value 7258
 Set-Variable -Scope Global -Name VNET_NAME -Value "vnet-tasks-tracker"
@@ -35,4 +37,4 @@ Set-Variable -Scope Global -Name WORKSPACE_ID -Value "c49f8aed-334c-4592-9719-74
 Set-Variable -Scope Global -Name WORKSPACE_NAME -Value "log-tasks-tracker-mop3f6"
 Set-Variable -Scope Global -Name WORKSPACE_SECRET -Value "fh4KFmnlNG9vcLcgBapwAHw16MrdbuvMNXW+UXFynSa/nutcswMq1SYbJflkKGLa4VElygs6ya+sV3931dq+8w=="
 Set-Variable -Scope Global -Name TODAY -Value (Get-Date -Format 'yyyyMMdd')
-Write-Host "Set 36 variables."
+Write-Host "Set 38 variables."
