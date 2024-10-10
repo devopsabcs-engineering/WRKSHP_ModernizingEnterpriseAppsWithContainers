@@ -11,6 +11,7 @@ Set-Variable -Scope Global -Name BACKEND_API_NAME -Value "tasksmanager-backend-a
 Set-Variable -Scope Global -Name BACKEND_API_PRINCIPAL_ID -Value "ed8464be-4ee4-446e-8f60-fbe69941d707"
 Set-Variable -Scope Global -Name BACKEND_SERVICE_APP_PORT -Value 7204
 Set-Variable -Scope Global -Name BACKEND_SERVICE_NAME -Value "tasksmanager-backend-processor"
+Set-Variable -Scope Global -Name BACKEND_SERVICE_PRINCIPAL_ID -Value "9f0d3f51-2fbb-4784-9e45-b0078fa8e105"
 Set-Variable -Scope Global -Name COSMOS_DB_ACCOUNT -Value "cosmos-tasks-tracker-state-store-mop3f6"
 Set-Variable -Scope Global -Name COSMOS_DB_CONTAINER -Value "taskscollection"
 Set-Variable -Scope Global -Name COSMOS_DB_DBNAME -Value "tasksmanagerdb"
@@ -20,6 +21,9 @@ Set-Variable -Scope Global -Name ENVIRONMENT -Value "cae-tasks-tracker"
 Set-Variable -Scope Global -Name FRONTEND_UI_BASE_URL -Value "https://tasksmanager-frontend-webapp.jollyriver-20f834af.eastus.azurecontainerapps.io"
 Set-Variable -Scope Global -Name FRONTEND_UI_BASE_URL_LOCAL -Value "https://localhost:7258"
 Set-Variable -Scope Global -Name FRONTEND_WEBAPP_NAME -Value "tasksmanager-frontend-webapp"
+Set-Variable -Scope Global -Name KEYVAULT_NAME -Value "kv-tasks-tracker-mop3f6"
+Set-Variable -Scope Global -Name KEYVAULT_SECRETS_OFFICER_ROLE_ID -Value "b86a8fe4-44ce-4948-aee5-eccb2c155cd7"
+Set-Variable -Scope Global -Name KEYVAULT_SECRETS_USER_ROLE_ID -Value "4633458b-17de-408a-b874-0445c86b69e6"
 Set-Variable -Scope Global -Name LOCATION -Value "eastus"
 Set-Variable -Scope Global -Name RANDOM_STRING -Value "mop3f6"
 Set-Variable -Scope Global -Name RESOURCE_GROUP -Value "rg-tasks-tracker-mop3f6"
@@ -28,6 +32,7 @@ Set-Variable -Scope Global -Name ROLE_ID -Value "00000000-0000-0000-0000-0000000
 Set-Variable -Scope Global -Name SERVICE_BUS_NAMESPACE_NAME -Value "sbns-taskstracker-mop3f6"
 Set-Variable -Scope Global -Name SERVICE_BUS_TOPIC_NAME -Value "tasksavedtopic"
 Set-Variable -Scope Global -Name SERVICE_BUS_TOPIC_SUBSCRIPTION -Value "sbts-tasks-processor"
+Set-Variable -Scope Global -Name SIGNEDIN_USERID -Value "b785230a-4af4-418a-acd9-aea99894d37a"
 Set-Variable -Scope Global -Name STORAGE_ACCOUNT_NAME -Value "sttaskstrackermop3f6"
 Set-Variable -Scope Global -Name STORAGE_ACCOUNT_KEY -Value "EDZQi1UjJbPrGRXUpB3hFB8XBwgORXKuP7yzKJgRISYVENaxgfG0NxJGHdikUAykruKSY+nLj4+S+AStTsK88g=="
 Set-Variable -Scope Global -Name TARGET_PORT -Value 5000
@@ -37,4 +42,4 @@ Set-Variable -Scope Global -Name WORKSPACE_ID -Value "c49f8aed-334c-4592-9719-74
 Set-Variable -Scope Global -Name WORKSPACE_NAME -Value "log-tasks-tracker-mop3f6"
 Set-Variable -Scope Global -Name WORKSPACE_SECRET -Value "fh4KFmnlNG9vcLcgBapwAHw16MrdbuvMNXW+UXFynSa/nutcswMq1SYbJflkKGLa4VElygs6ya+sV3931dq+8w=="
 Set-Variable -Scope Global -Name TODAY -Value (Get-Date -Format 'yyyyMMdd')
-Write-Host "Set 38 variables."
+Write-Host "Set 43 variables."
