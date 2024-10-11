@@ -93,6 +93,7 @@ stages:
         steps:
           - checkout: self
           - task: AzureResourceManagerTemplateDeployment@3
+            enabled: false
             inputs:
               deploymentScope: "Resource Group"
               azureResourceManagerConnection: "$(AZURE_SUBSCRIPTION)"
@@ -106,6 +107,11 @@ stages:
               deploymentMode: "Incremental"
               deploymentName: "azdo-deploy-$(Build.BuildId)"
 
+          - task: AzureCLI@2
+            inputs:
+              scriptType: 'pscore'
+              scriptLocation: 'scriptPath'
+              scriptPath: '$(System.DefaultWorkingDirectory)/deploy.ps1'
   - stage: Create_Import_ACR
     displayName: Create Azure Container Registry if needed
     dependsOn: Validate
