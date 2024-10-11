@@ -171,6 +171,7 @@ stages:
         steps:
           - checkout: self
           - task: AzureResourceManagerTemplateDeployment@3
+            enabled: false
             inputs:
               deploymentScope: "Resource Group"
               azureResourceManagerConnection: $(AZURE_SUBSCRIPTION)
@@ -183,6 +184,12 @@ stages:
               overrideParameters: '-containerRegistryName "$(CONTAINER_REGISTRY_NAME)" -backendProcessorServiceImage "$(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-backend-processor:latest" -backendApiServiceImage "$(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-backend-api:latest" -frontendWebAppServiceImage "$(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest"'
               deploymentMode: "Incremental"
               deploymentName: "azdo-deploy-$(Build.BuildId)"
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: "$(AZURE_SUBSCRIPTION)"
+              scriptType: "pscore"
+              scriptLocation: "scriptPath"
+              scriptPath: "$(System.DefaultWorkingDirectory)/deploy.ps1"
 
   - stage: Teardown
     displayName: Teardown infrastructure
