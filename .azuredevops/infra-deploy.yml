@@ -72,6 +72,7 @@ stages:
                 fi
 
           - task: AzureResourceManagerTemplateDeployment@3
+            enabled: false
             inputs:
               deploymentScope: "Resource Group"
               azureResourceManagerConnection: $(AZURE_SUBSCRIPTION)
