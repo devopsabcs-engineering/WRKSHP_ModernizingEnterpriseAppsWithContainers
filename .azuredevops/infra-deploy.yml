@@ -20,7 +20,7 @@ pool:
 
 variables:
   - name: REGISTRY
-    value: ghcr.io
+    value: $(CONTAINER_REGISTRY_NAME).azurecr.io
   - name: BACKEND_API_IMAGE_NAME
     value: azure/tasksmanager-backend-api
   - name: FRONTEND_APP_IMAGE_NAME
@@ -102,7 +102,7 @@ stages:
               templateLocation: "Linked artifact"
               csmFile: "infra/bicep/main.bicep"
               csmParametersFile: "infra/bicep/main.parameters.json"
-              overrideParameters: "-containerRegistryName -backendProcessorServiceImage $(REGISTRY)/$(BACKEND_PROCESSOR_IMAGE_NAME):latest -backendApiServiceImage $(REGISTRY)/$(BACKEND_API_IMAGE_NAME):latest -frontendWebAppServiceImage $(REGISTRY)/$(FRONTEND_APP_IMAGE_NAME):latest"
+              overrideParameters: "-containerRegistryName $(CONTAINER_REGISTRY_NAME) -backendProcessorServiceImage $(REGISTRY)/$(BACKEND_PROCESSOR_IMAGE_NAME):latest -backendApiServiceImage $(REGISTRY)/$(BACKEND_API_IMAGE_NAME):latest -frontendWebAppServiceImage $(REGISTRY)/$(FRONTEND_APP_IMAGE_NAME):latest"
               deploymentMode: "Incremental"
               deploymentName: "azdo-deploy-$(Build.BuildId)"
 
