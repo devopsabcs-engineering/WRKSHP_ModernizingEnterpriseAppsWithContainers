@@ -80,7 +80,7 @@ stages:
               location: $(LOCATION)
               templateLocation: "Linked artifact"
               csmFile: "infra/bicep/main.bicep"
-              csmParametersFile: "bicep/main.parameters.json"
+              csmParametersFile: "infra/bicep/main.parameters.json"
               deploymentMode: "Validation"
 
   - stage: Deploy
