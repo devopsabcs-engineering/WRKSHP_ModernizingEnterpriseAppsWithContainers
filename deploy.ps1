@@ -1,5 +1,6 @@
 $RESOURCE_GROUP = "rg-aca-workshop-003"
 $LOCATION = "eastus2"
+$addCosmosDbRole = $false # Add Cosmos DB Role - for INTERACTIVE LOGIN ONLY
 
 Write-Output "Creating Resource Group $RESOURCE_GROUP in $LOCATION"
 az group create `
@@ -52,22 +53,26 @@ az deployment group create `
 
 Write-Output "Deployment Completed"
 
-# get output of the deployment from cosmos db
-$COSMOS_DB_ACCOUNT = az deployment group show --resource-group $RESOURCE_GROUP `
-    --name main --query properties.outputs.cosmosDbAccountName.value -o tsv
+if ($addCosmosDbRole) {
+    # Add Cosmos DB Role - for INTERACTIVE LOGIN ONLY
+    Write-Output "Adding Cosmos DB Role"
+    # get output of the deployment from cosmos db
+    $COSMOS_DB_ACCOUNT = az deployment group show --resource-group $RESOURCE_GROUP `
+        --name main --query properties.outputs.cosmosDbAccountName.value -o tsv
 
-Write-Output "Cosmos DB Account: $COSMOS_DB_ACCOUNT"
+    Write-Output "Cosmos DB Account: $COSMOS_DB_ACCOUNT"
 
-$ROLE_ID = "00000000-0000-0000-0000-000000000002" #"Cosmos DB Built-in Data Contributor" 
+    $ROLE_ID = "00000000-0000-0000-0000-000000000002" #"Cosmos DB Built-in Data Contributor" 
 
-# get the principal id for current user
-$principalId = $(az ad signed-in-user show --query id -o tsv)
-Write-Output "Principal Id: $principalId"
+    # get the principal id for current user
+    $principalId = $(az ad signed-in-user show --query id -o tsv)
+    Write-Output "Principal Id: $principalId"
 
-Write-Output "Setting Cosmos DB Role"
-az cosmosdb sql role assignment create `
-    --resource-group $RESOURCE_GROUP `
-    --account-name  $COSMOS_DB_ACCOUNT `
-    --scope "/" `
-    --principal-id $principalId `
-    --role-definition-id $ROLE_ID
+    Write-Output "Setting Cosmos DB Role"
+    az cosmosdb sql role assignment create `
+        --resource-group $RESOURCE_GROUP `
+        --account-name  $COSMOS_DB_ACCOUNT `
+        --scope "/" `
+        --principal-id $principalId `
+        --role-definition-id $ROLE_ID
+}
