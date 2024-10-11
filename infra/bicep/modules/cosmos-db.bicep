@@ -19,6 +19,9 @@ param cosmosDbDatabaseName string
 @description('The name of Cosmos DB\'s collection.')
 param cosmosDbCollectionName string
 
+@description('Disable local auth for Cosmos DB')
+param disableLocalAuth bool //= false
+
 // ------------------
 // RESOURCES
 // ------------------
@@ -37,7 +40,7 @@ resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2022-08-15' = {
     ]
     databaseAccountOfferType: 'Standard'
     publicNetworkAccess: 'Enabled'
-    //disableLocalAuth: false // can disable local auth for cosmos db
+    disableLocalAuth: disableLocalAuth // can disable local auth for cosmos db
   }
 }
 

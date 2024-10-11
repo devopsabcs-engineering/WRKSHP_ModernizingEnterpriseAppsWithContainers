@@ -6,7 +6,11 @@ az group create `
     --name $RESOURCE_GROUP `
     --location $LOCATION
 
-$CONTAINER_REGISTRY_NAME = "cracaworkshopek002"
+# Get Unique String for Resource Group
+$uniqueString = az group show --name $RESOURCE_GROUP --query id -o tsv | .\ArmUniqueStringGenerator.ps1
+Write-Output "Unique String: $uniqueString"
+
+$CONTAINER_REGISTRY_NAME = "cr$uniqueString"
 
 Write-Output "Creating Azure Container Registry $CONTAINER_REGISTRY_NAME in $RESOURCE_GROUP"
 az acr create `
@@ -31,6 +35,14 @@ Write-Output "Building Frontend Web App on ACR and Push to ACR"
 az acr build --registry $CONTAINER_REGISTRY_NAME `
     --image "tasksmanager/tasksmanager-frontend-webapp" `
     --file 'src/TasksTracker.WebPortal.Frontend.Ui/Dockerfile' .
+
+# read main.parameters.template.json file and update the container registry name
+$parameters = Get-Content "infra/bicep/main.parameters.template.json" -Raw
+$parameters = $parameters -replace "__CONTAINER_REGISTRY_NAME__", $CONTAINER_REGISTRY_NAME
+$parameters | Set-Content "infra/bicep/main.parameters.json"
+
+Write-Output "Parameters file updated with Container Registry Name"
+Get-Content "infra/bicep/main.parameters.json"
 
 Write-Output "Creating Container App Service Plan"
 az deployment group create `

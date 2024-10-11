@@ -111,13 +111,16 @@ param frontendWebAppServiceImage string
 
 // App Ports
 @description('The target and dapr port for the frontend web app service.')
-param frontendWebAppPortNumber int = 80
+param frontendWebAppPortNumber int = 5000
 
 @description('The target and dapr port for the backend api service.')
-param backendApiPortNumber int = 80
+param backendApiPortNumber int = 5000
 
 @description('The dapr port for the backend processor service.')
-param backendProcessorPortNumber int = 80
+param backendProcessorPortNumber int = 5000
+
+@description('Disable local auth for Cosmos DB')
+param disableLocalAuth bool = false
 
 // ------------------
 // RESOURCES
@@ -163,6 +166,7 @@ module cosmosDb 'modules/cosmos-db.bicep' = {
     tags: tags
     cosmosDbDatabaseName: cosmosDbDatabaseName
     cosmosDbCollectionName: cosmosDbCollectionName
+    disableLocalAuth: disableLocalAuth
   }
 }
 

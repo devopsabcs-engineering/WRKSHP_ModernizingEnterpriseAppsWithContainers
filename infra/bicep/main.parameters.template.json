@@ -1,15 +1,15 @@
 {
     "containerRegistryName": {
-        "value": "crvmgxilmjykyoy"
+        "value": "__CONTAINER_REGISTRY_NAME__"
     },
     "backendProcessorServiceImage": {
-        "value": "crvmgxilmjykyoy.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest"
+        "value": "__CONTAINER_REGISTRY_NAME__.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest"
     },
     "backendApiServiceImage": {
-        "value": "crvmgxilmjykyoy.azurecr.io/tasksmanager/tasksmanager-backend-api:latest"
+        "value": "__CONTAINER_REGISTRY_NAME__.azurecr.io/tasksmanager/tasksmanager-backend-api:latest"
     },
     "frontendWebAppServiceImage": {
-        "value": "crvmgxilmjykyoy.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest"
+        "value": "__CONTAINER_REGISTRY_NAME__.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest"
     },
     "backendProcessorServiceName": {
         "value": "tasksmanager-backend-processor"
