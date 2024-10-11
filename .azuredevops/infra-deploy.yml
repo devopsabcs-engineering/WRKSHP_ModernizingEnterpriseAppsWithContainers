@@ -149,6 +149,7 @@ stages:
         steps:
           - task: AzureCLI@2
             displayName: Import images from GitHub Container Registry
+            enabled: false
             inputs:
               azureSubscription: $(AZURE_SUBSCRIPTION)
               scriptType: "bash"
