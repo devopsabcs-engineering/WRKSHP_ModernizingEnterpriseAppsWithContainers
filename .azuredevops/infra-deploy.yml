@@ -108,6 +108,7 @@ stages:
               deploymentMode: "Incremental"
               deploymentName: "azdo-deploy-$(Build.BuildId)"
           - task: AzureCLI@2
+            displayName: Use deploy script
             inputs:
               azureSubscription: "$(AZURE_SUBSCRIPTION)"
               scriptType: "pscore"
@@ -185,6 +186,7 @@ stages:
               deploymentMode: "Incremental"
               deploymentName: "azdo-deploy-$(Build.BuildId)"
           - task: AzureCLI@2
+            displayName: Use deploy script
             inputs:
               azureSubscription: "$(AZURE_SUBSCRIPTION)"
               scriptType: "pscore"
