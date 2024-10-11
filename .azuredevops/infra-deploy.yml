@@ -180,7 +180,7 @@ stages:
               templateLocation: "Linked artifact"
               csmFile: "infra/bicep/main.bicep"
               csmParametersFile: "infra/bicep/main.parameters.json"
-              overrideParameters: "-containerRegistryName $(CONTAINER_REGISTRY_NAME) -backendProcessorServiceImage $(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-backend-processor:latest -backendApiServiceImage $(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-backend-api:latest -frontendWebAppServiceImage $(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest"
+              overrideParameters: '-containerRegistryName "$(CONTAINER_REGISTRY_NAME)" -backendProcessorServiceImage "$(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-backend-processor:latest" -backendApiServiceImage "$(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-backend-api:latest" -frontendWebAppServiceImage "$(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest"'
               deploymentMode: "Incremental"
               deploymentName: "azdo-deploy-$(Build.BuildId)"
 
