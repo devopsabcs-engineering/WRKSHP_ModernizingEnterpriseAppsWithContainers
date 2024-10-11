@@ -94,17 +94,17 @@ stages:
           - checkout: self
           - task: AzureResourceManagerTemplateDeployment@3
             inputs:
-              deploymentScope: "Resource Group"
-              azureResourceManagerConnection: $(AZURE_SUBSCRIPTION)
-              action: "Create Or Update Resource Group"
-              resourceGroupName: $(RESOURCE_GROUP)
-              location: "$(LOCATION)"
-              templateLocation: "Linked artifact"
-              csmFile: "infra/bicep/main.bicep"
-              csmParametersFile: "infra/bicep/main.parameters.json"
-              overrideParameters: "-containerRegistryName $(CONTAINER_REGISTRY_NAME) -backendProcessorServiceImage $(REGISTRY)/$(BACKEND_PROCESSOR_IMAGE_NAME):latest -backendApiServiceImage $(REGISTRY)/$(BACKEND_API_IMAGE_NAME):latest -frontendWebAppServiceImage $(REGISTRY)/$(FRONTEND_APP_IMAGE_NAME):latest"
-              deploymentMode: "Incremental"
-              deploymentName: "azdo-deploy-$(Build.BuildId)"
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: '$(AZURE_SUBSCRIPTION)'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: '$(RESOURCE_GROUP)'
+              location: '$(LOCATION)'
+              templateLocation: 'Linked artifact'
+              csmFile: 'infra/bicep/main.bicep'
+              csmParametersFile: 'infra/bicep/main.parameters.json'
+              #overrideParameters: '-containerRegistryName "$(CONTAINER_REGISTRY_NAME)" -backendProcessorServiceImage "$(REGISTRY)/$(BACKEND_PROCESSOR_IMAGE_NAME):latest" -backendApiServiceImage "$(REGISTRY)/$(BACKEND_API_IMAGE_NAME):latest" -frontendWebAppServiceImage "$(REGISTRY)/$(FRONTEND_APP_IMAGE_NAME):latest"'
+              deploymentMode: 'Incremental'
+              deploymentName: 'azdo-deploy-$(Build.BuildId)'
 
   - stage: Create_Import_ACR
     displayName: Create Azure Container Registry if needed
