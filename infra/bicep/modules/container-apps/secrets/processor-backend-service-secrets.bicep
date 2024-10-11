@@ -39,12 +39,12 @@ var sendGridKey = empty(sendGridKeySecretValue) ? 'dummy' : sendGridKeySecretVal
 // RESOURCES
 // ------------------
 
-resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' existing = {
+resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   name: KEYVAULT_NAME
 }
 
 // Send Grid API key secret used by Backend Background Processor Service.
-resource sendGridKeySecret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+resource sendGridKeySecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: keyVault
   tags: tags
   name: sendGridKeySecretName
@@ -54,7 +54,7 @@ resource sendGridKeySecret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
 }
 
 // External Azure storage key secret used by Backend Background Processor Service.
-resource externalAzureStorageKeySecret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+resource externalAzureStorageKeySecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: keyVault
   tags: tags
   name: externalAzureStorageKeySecretName

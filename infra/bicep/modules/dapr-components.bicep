@@ -61,16 +61,16 @@ param backendProcessorServiceName string
 // RESOURCES
 // ------------------
 
-resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
+resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
   name: containerAppsEnvironmentName
 }
 
-resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2022-08-15' existing = {
+resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2024-05-15' existing = {
   name: cosmosDbName
 }
 
 //Secret Store Component
-resource secretstoreComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
+resource secretstoreComponent 'Microsoft.App/managedEnvironments/daprComponents@2024-03-01' = {
   name: secretStoreComponentName
   parent: containerAppsEnvironment
   properties: {
@@ -90,7 +90,7 @@ resource secretstoreComponent 'Microsoft.App/managedEnvironments/daprComponents@
 }
 
 //Cosmos DB State Store Component
-resource statestoreComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-06-01-preview' = {
+resource statestoreComponent 'Microsoft.App/managedEnvironments/daprComponents@2024-03-01' = {
   name: 'statestore'
   parent: containerAppsEnvironment
   properties: {
@@ -118,7 +118,7 @@ resource statestoreComponent 'Microsoft.App/managedEnvironments/daprComponents@2
 }
 
 //PubSub service bus Component
-resource pubsubComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-06-01-preview' = {
+resource pubsubComponent 'Microsoft.App/managedEnvironments/daprComponents@2024-03-01' = {
   name: 'dapr-pubsub-servicebus'
   parent: containerAppsEnvironment
   properties: {
@@ -143,7 +143,7 @@ resource pubsubComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-
 }
 
 //Scheduled Tasks Manager Component
-resource scheduledtasksmanagerDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-06-01-preview' = {
+resource scheduledtasksmanagerDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2024-03-01' = {
   name: 'scheduledtasksmanager'
   parent: containerAppsEnvironment
   properties: {
@@ -162,7 +162,7 @@ resource scheduledtasksmanagerDaprComponent 'Microsoft.App/managedEnvironments/d
 }
 
 //External tasks manager Component (Storage Queue)
-resource externaltasksmanagerDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-06-01-preview' = {
+resource externaltasksmanagerDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2024-03-01' = {
   name: 'externaltasksmanager'
   parent: containerAppsEnvironment
   properties: {
@@ -201,7 +201,7 @@ resource externaltasksmanagerDaprComponent 'Microsoft.App/managedEnvironments/da
 }
 
 //External tasks blob store Component (Blob Store)
-resource externaltasksblobstoreDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-06-01-preview' = {
+resource externaltasksblobstoreDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2024-03-01' = {
   name: 'externaltasksblobstore'
   parent: containerAppsEnvironment
   properties: {
@@ -240,7 +240,7 @@ resource externaltasksblobstoreDaprComponent 'Microsoft.App/managedEnvironments/
 }
 
 //SendGrid outbound Component
-resource sendgridDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-06-01-preview' = {
+resource sendgridDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2024-03-01' = {
   name: 'sendgrid'
   parent: containerAppsEnvironment
   properties: {

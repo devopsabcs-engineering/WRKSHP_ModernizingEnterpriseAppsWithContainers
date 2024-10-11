@@ -63,21 +63,21 @@ resource serviceBusTopic 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' exi
   parent: serviceBusNamespace
 }
 
-resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2022-08-15' existing = {
+resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2024-05-15' existing = {
   name: cosmosDbName
 }
 
-resource cosmosDbDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-04-15' existing = {
+resource cosmosDbDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-05-15' existing = {
   name: cosmosDbDatabaseName
   parent: cosmosDbAccount
 }
 
-resource cosmosDbDatabaseCollection 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2021-05-15' existing = {
+resource cosmosDbDatabaseCollection 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2024-05-15' existing = {
   name: cosmosDbCollectionName
   parent: cosmosDbDatabase
 }
 
-resource backendApiService 'Microsoft.App/containerApps@2022-06-01-preview' = {
+resource backendApiService 'Microsoft.App/containerApps@2024-03-01' = {
   name: backendApiServiceName
   location: location
   tags: tags
@@ -145,7 +145,7 @@ resource backendApiService 'Microsoft.App/containerApps@2022-06-01-preview' = {
 
 // Assign cosmosdb account read/write access to aca system assigned identity
 // To know more: https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-setup-rbac
-resource backendApiService_cosmosdb_role_assignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2022-08-15' = {
+resource backendApiService_cosmosdb_role_assignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2024-05-15' = {
   name: guid(subscription().id, backendApiService.name, '00000000-0000-0000-0000-000000000002')
   parent: cosmosDbAccount
   properties: {
@@ -160,7 +160,7 @@ resource backendApiService_cosmosdb_role_assignment 'Microsoft.DocumentDB/databa
 }
 
 // Enable publish message to Service Bus using app managed identity.
-resource backendApiService_sb_role_assignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource backendApiService_sb_role_assignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, backendApiService.name, '69a216fc-b8fb-44d8-bc22-1f3c2cd27a39')
   properties: {
     principalId: backendApiService.identity.principalId

@@ -88,11 +88,11 @@ resource serviceBusTopicAuthorizationRule 'Microsoft.ServiceBus/namespaces/topic
   parent: serviceBusTopic
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' existing = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' existing = {
   name: externalStorageAccountName
 }
 
-resource backendProcessorService 'Microsoft.App/containerApps@2022-06-01-preview' = {
+resource backendProcessorService 'Microsoft.App/containerApps@2024-03-01' = {
   name: backendProcessorServiceName
   location: location
   tags: tags
@@ -184,7 +184,7 @@ resource backendProcessorService 'Microsoft.App/containerApps@2022-06-01-preview
 }
 
 // Enable consume from servicebus using system managed identity.
-resource backendProcessorService_sb_role_assignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource backendProcessorService_sb_role_assignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, backendProcessorServiceName, '4f6d3b9b-027b-4f4c-9142-0e5a2a2247e0')
   properties: {
     principalId: backendProcessorService.identity.principalId

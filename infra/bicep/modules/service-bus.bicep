@@ -52,7 +52,7 @@ resource serviceBusTopicAuthRule 'Microsoft.ServiceBus/namespaces/topics/authori
   }
 }
 
-resource serviceBusTopicSubscription 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2022-10-01-preview' = {
+resource serviceBusTopicSubscription 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-11-01' = {
   name: backendProcessorServiceName
   parent: serviceBusTopic
 }
