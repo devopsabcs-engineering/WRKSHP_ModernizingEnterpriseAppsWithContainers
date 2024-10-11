@@ -49,3 +49,25 @@ az deployment group create `
     --resource-group $RESOURCE_GROUP `
     --template-file "infra/bicep/main.bicep" `
     --parameters "infra/bicep/main.parameters.json"
+
+Write-Output "Deployment Completed"
+
+# get output of the deployment from cosmos db
+$COSMOS_DB_ACCOUNT = az deployment group show --resource-group $RESOURCE_GROUP `
+    --name main --query properties.outputs.cosmosDbAccountName.value -o tsv
+
+Write-Output "Cosmos DB Account: $COSMOS_DB_ACCOUNT"
+
+$ROLE_ID = "00000000-0000-0000-0000-000000000002" #"Cosmos DB Built-in Data Contributor" 
+
+# get the principal id for current user
+$principalId = $(az ad signed-in-user show --query id -o tsv)
+Write-Output "Principal Id: $principalId"
+
+Write-Output "Setting Cosmos DB Role"
+az cosmosdb sql role assignment create `
+    --resource-group $RESOURCE_GROUP `
+    --account-name  $COSMOS_DB_ACCOUNT `
+    --scope "/" `
+    --principal-id $principalId `
+    --role-definition-id $ROLE_ID

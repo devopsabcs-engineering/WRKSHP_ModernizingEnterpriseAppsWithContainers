@@ -258,3 +258,6 @@ output frontendWebAppServiceFQDN string = containerApps.outputs.frontendWebAppSe
 
 @description('The FQDN of the backend web app')
 output backendApiServiceFQDN string = containerApps.outputs.backendApiServiceFQDN
+
+@description('The name of the cosmos db account.')
+output cosmosDbAccountName string = cosmosDb.outputs.cosmosDbName
