@@ -108,6 +108,7 @@ stages:
               deploymentName: "azdo-deploy-$(Build.BuildId)"
           - task: AzureCLI@2
             inputs:
+              azureSubscription: "$(AZURE_SUBSCRIPTION)"
               scriptType: "pscore"
               scriptLocation: "scriptPath"
               scriptPath: "$(System.DefaultWorkingDirectory)/deploy.ps1"
