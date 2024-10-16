@@ -38,6 +38,7 @@ variables:
 stages:
   - stage: set_version
     displayName: Set version
+    condition: eq('${{ parameters.teardown }}', false)
     jobs:
       - job: set_version
         displayName: Set version
