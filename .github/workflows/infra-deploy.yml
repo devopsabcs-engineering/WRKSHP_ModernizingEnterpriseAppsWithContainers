@@ -136,28 +136,35 @@ jobs:
         run: |
           echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
           docker pull ${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }}:latest
+          # tag the image with the ACR name
+          docker tag ${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }}:latest ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-api:latest
+          # tag the image with the ACR name with the sha
+          docker tag ${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }}:latest ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-api:${{ github.sha }}
           docker pull ${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }}:latest
+          # tag the image with the ACR name
+          docker tag ${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }}:latest ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest
+          # tag the image with the ACR name with the sha
+          docker tag ${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }}:latest ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:${{ github.sha }}
           docker pull ${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest
+          # tag the image with the ACR name
+          docker tag ${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest
+          # tag the image with the ACR name with the sha
+          docker tag ${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:${{ github.sha }}
       - uses: azure/docker-login@v2
         with:
           login-server: ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io
           username: ${{ vars.CONTAINER_REGISTRY_NAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}      
+          password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
+          docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest
           docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:${{ github.sha }}
+          docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-api:latest
           docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-api:${{ github.sha }}
+          docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest
           docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:${{ github.sha }}
-      # login to Azure Container Registry
-      - name: Login to Azure Container Registry
-        uses: azure/CLI@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          inlineScript: |
-            az acr login --name ${{ vars.CONTAINER_REGISTRY_NAME }}
       # Import images from GitHub Container Registry
       - name: Import images from GitHub Container Registry
+        if: false
         uses: azure/CLI@v1
         with:
           inlineScript: |
@@ -165,7 +172,7 @@ jobs:
             az acr import --name ${{ vars.CONTAINER_REGISTRY_NAME }} --source ${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }}:latest --username ${{ github.actor }} --password ${{ secrets.PERSONAL_ACCESS_TOKEN }} --image tasksmanager/tasksmanager-backend-processor --force
             az acr import --name ${{ vars.CONTAINER_REGISTRY_NAME }} --source ${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }}:latest --username ${{ github.actor }} --password ${{ secrets.PERSONAL_ACCESS_TOKEN }} --image tasksmanager/tasksmanager-backend-api --force
             az acr import --name ${{ vars.CONTAINER_REGISTRY_NAME }} --source ${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest --username ${{ github.actor }} --password ${{ secrets.PERSONAL_ACCESS_TOKEN }} --image tasksmanager/tasksmanager-frontend-webapp --force
-            
+
   # This job deploys the bicep template to Azure subscription using ACR images
   deploy-with-acr-images:
     runs-on: ubuntu-latest
