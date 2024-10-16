@@ -1,18 +1,18 @@
 name: Build and deploy infrastructure as code to Azure
 
 on:
-    push:
-        branches:
-        - main
-        paths:
-        - 'infra/bicep/**'
-        - '.github/workflows/infra-deploy.yml'
-    workflow_dispatch:
-        inputs:
-            teardown:
-                description: 'Set this to true if you want to deleted the infrastructure deployed in the subscription'
-                required: true
-                type: boolean
+  push:
+    branches:
+      - main
+    paths:
+      - "infra/bicep/**"
+      - ".github/workflows/infra-deploy.yml"
+  workflow_dispatch:
+    inputs:
+      teardown:
+        description: "Set this to true if you want to deleted the infrastructure deployed in the subscription"
+        required: true
+        type: boolean
 
 concurrency:
   group: infra-deploy-demo-env
@@ -21,6 +21,8 @@ concurrency:
 permissions:
   id-token: write
   contents: read
+  # push and pull access to GitHub Container Registry
+  packages: write
 
 env:
   REGISTRY: ghcr.io
@@ -31,21 +33,21 @@ env:
 jobs:
   # This job is used for linting the bicep files
   lint:
-      runs-on: ubuntu-latest
-      if : ${{ github.event.inputs.teardown != 'true' }}
-      name: Lint bicep files
-      steps:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.teardown != 'true' }}
+    name: Lint bicep files
+    steps:
       - uses: actions/checkout@v2
       - name: Perform linting
         run: az bicep build --f infra/bicep/main.bicep
 
   # This job creates the resource group if it does not exist and validates the bicep template
   validate:
-      runs-on: ubuntu-latest
-      if : ${{ github.event.inputs.teardown != 'true' }}
-      name: Create RG and Validate bicep template
-      needs: [ lint ]
-      steps:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.teardown != 'true' }}
+    name: Create RG and Validate bicep template
+    needs: [lint]
+    steps:
       - uses: actions/checkout@v2
       - name: Azure login
         uses: azure/login@v1
@@ -79,8 +81,8 @@ jobs:
   # This job run what-if on the bicep template
   preview:
     runs-on: ubuntu-latest
-    if : ${{ github.event.inputs.teardown != 'true' }}
-    needs: [ validate ]
+    if: ${{ github.event.inputs.teardown != 'true' }}
+    needs: [validate]
     name: Run what-if on the bicep template
     steps:
       - uses: actions/checkout@v3
@@ -102,8 +104,8 @@ jobs:
   create-acr:
     runs-on: ubuntu-latest
     name: Create ACR and import images from GitHub Container Registry if configured
-    if : ${{ vars.CONTAINER_REGISTRY_NAME != '' }}
-    needs: [ preview ]
+    if: ${{ vars.CONTAINER_REGISTRY_NAME != '' }}
+    needs: [preview]
     steps:
       - uses: actions/checkout@v3
       - uses: azure/login@v1
@@ -115,7 +117,7 @@ jobs:
       - name: Create ACR ${{ vars.CONTAINER_REGISTRY_NAME }} if does not exist
         uses: azure/CLI@v1
         with:
-          inlineScript: | 
+          inlineScript: |
             if [[ $(az acr check-name -n ${{ vars.CONTAINER_REGISTRY_NAME }}  -o tsv --query "nameAvailable") == false ]]
             then
               echo "ACR already exists."
@@ -129,6 +131,10 @@ jobs:
               az acr create --name ${{ vars.CONTAINER_REGISTRY_NAME }} --resource-group ${{ vars.RESOURCE_GROUP }} --sku Basic --location ${{ vars.LOCATION }}
               echo "ACR created"
             fi
+      # login to GitHub Container Registry
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      # Import images from GitHub Container Registry
       - name: Import images from GitHub Container Registry
         uses: azure/CLI@v1
         with:
@@ -140,8 +146,8 @@ jobs:
   # This job deploys the bicep template to Azure subscription using ACR images
   deploy-with-acr-images:
     runs-on: ubuntu-latest
-    if : ${{ github.event.inputs.teardown != 'true' }}
-    needs: [ create-acr]
+    if: ${{ github.event.inputs.teardown != 'true' }}
+    needs: [create-acr]
     name: Deploy to Azure subscription with ACR
     steps:
       - uses: actions/checkout@v3
@@ -166,7 +172,7 @@ jobs:
   deploy-with-ghcr-images:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.teardown != 'true' && vars.CONTAINER_REGISTRY_NAME == '' }}
-    needs: [ preview ]
+    needs: [preview]
     name: Deploy to Azure subscription with GHCR
     steps:
       - uses: actions/checkout@v3
@@ -190,7 +196,7 @@ jobs:
   # This job deletes the resource group created by the workflow and can only be triggered by the workflow dispatch event.
   teardown:
     runs-on: ubuntu-latest
-    if : ${{ github.event.inputs.teardown == 'true' }}
+    if: ${{ github.event.inputs.teardown == 'true' }}
     steps:
       - uses: actions/checkout@v3
       - uses: azure/login@v1
