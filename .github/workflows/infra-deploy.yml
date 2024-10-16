@@ -172,6 +172,8 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
+            # enable admin account for ACR
+            az acr update -n ${{ vars.CONTAINER_REGISTRY_NAME }} --admin-enabled true
             # get the ACR login server password
             ACR_PASSWORD=$(az acr credential show --name ${{ vars.CONTAINER_REGISTRY_NAME }} --query "passwords[0].value" -o tsv)
             # login to ACR
