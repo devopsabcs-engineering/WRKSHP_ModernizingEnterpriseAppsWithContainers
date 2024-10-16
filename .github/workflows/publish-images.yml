@@ -34,11 +34,11 @@ jobs:
       with:
         filters: |
           backend:
-            - 'TasksTracker.TasksManager.Backend.Api/**'
+            - 'src/TasksTracker.TasksManager.Backend.Api/**'
           frontend:
-            - 'TasksTracker.WebPortal.Frontend.Ui/**'
+            - 'src/TasksTracker.WebPortal.Frontend.Ui/**'
           processor:
-            - 'TasksTracker.Processor.Backend.Svc/**'
+            - 'src/TasksTracker.Processor.Backend.Svc/**'
 
   build-and-push-backend-image:
     needs: detect-changes
@@ -70,7 +70,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          file: ./TasksTracker.TasksManager.Backend.Api/Dockerfile
+          file: ./src/TasksTracker.TasksManager.Backend.Api/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -105,7 +105,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          file: ./TasksTracker.WebPortal.Frontend.Ui/Dockerfile
+          file: ./src/TasksTracker.WebPortal.Frontend.Ui/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -140,7 +140,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          file: ./TasksTracker.Processor.Backend.Svc/Dockerfile
+          file: ./src/TasksTracker.Processor.Backend.Svc/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
