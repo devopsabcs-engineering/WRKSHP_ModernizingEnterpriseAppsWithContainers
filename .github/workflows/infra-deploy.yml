@@ -24,9 +24,9 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  BACKEND_API_IMAGE_NAME: azure/tasksmanager-backend-api
-  FRONTEND_APP_IMAGE_NAME: azure/tasksmanager-frontend-webapp
-  BACKEND_PROCESSOR_IMAGE_NAME: azure/tasksmanager-backend-processor
+  BACKEND_API_IMAGE_NAME: devopsabcs-engineering/tasksmanager-backend-api #azure/tasksmanager-backend-api
+  FRONTEND_APP_IMAGE_NAME: devopsabcs-engineering/tasksmanager-frontend-webapp #azure/tasksmanager-frontend-webapp
+  BACKEND_PROCESSOR_IMAGE_NAME: devopsabcs-engineering/tasksmanager-backend-processor #azure/tasksmanager-backend-processor
 
 jobs:
   # This job is used for linting the bicep files
