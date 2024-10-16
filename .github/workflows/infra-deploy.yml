@@ -5,7 +5,7 @@ on:
         branches:
         - main
         paths:
-        - 'bicep/**'
+        - 'infra/bicep/**'
         - '.github/workflows/infra-deploy.yml'
     workflow_dispatch:
         inputs:
@@ -37,7 +37,7 @@ jobs:
       steps:
       - uses: actions/checkout@v2
       - name: Perform linting
-        run: az bicep build --f bicep/main.bicep
+        run: az bicep build --f infra/bicep/main.bicep
 
   # This job creates the resource group if it does not exist and validates the bicep template
   validate:
@@ -72,8 +72,8 @@ jobs:
           deploymentName: ${{ github.run_number }}
           resourceGroupName: ${{ vars.RESOURCE_GROUP }}
           region: ${{ vars.LOCATION }}
-          template: ./bicep/main.bicep
-          parameters: ./bicep/main.parameters.json
+          template: ./infra/bicep/main.bicep
+          parameters: ./infra/bicep/main.parameters.json
           deploymentMode: Validate
 
   # This job run what-if on the bicep template
@@ -94,8 +94,8 @@ jobs:
         name: Run what-if
         with:
           resourceGroupName: ${{ vars.RESOURCE_GROUP }}
-          template: ./bicep/main.bicep
-          parameters: ./bicep/main.parameters.json containerRegistryName=${{ vars.CONTAINER_REGISTRY_NAME }} backendProcessorServiceImage=${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }} backendApiServiceImage=${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }} frontendWebAppServiceImage=${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}
+          template: ./infra/bicep/main.bicep
+          parameters: ./infra/bicep/main.parameters.json containerRegistryName=${{ vars.CONTAINER_REGISTRY_NAME }} backendProcessorServiceImage=${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }} backendApiServiceImage=${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }} frontendWebAppServiceImage=${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}
           additionalArguments: "--what-if --rollback-on-error --what-if-exclude-change-types  Ignore"
 
   # This job creates ACR and imports images from GitHub Container Registry if configured. If ACR already exists but not in same resource group, it will fail the workflow
@@ -158,8 +158,8 @@ jobs:
           deploymentName: "github-${{ github.run_number }}"
           resourceGroupName: ${{ vars.RESOURCE_GROUP }}
           region: ${{ vars.LOCATION }}
-          template: ./bicep/main.bicep
-          parameters: ./bicep/main.parameters.json containerRegistryName=${{ vars.CONTAINER_REGISTRY_NAME }} backendProcessorServiceImage=${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest backendApiServiceImage=${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-api:latest frontendWebAppServiceImage=${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest
+          template: ./infra/bicep/main.bicep
+          parameters: ./infra/bicep/main.parameters.json containerRegistryName=${{ vars.CONTAINER_REGISTRY_NAME }} backendProcessorServiceImage=${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest backendApiServiceImage=${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-api:latest frontendWebAppServiceImage=${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest
           failOnStdErr: false
 
   # This job deploys the bicep template to Azure subscription using GitHub Container Registry images
@@ -183,8 +183,8 @@ jobs:
           deploymentName: "github-${{ github.run_number }}"
           resourceGroupName: ${{ vars.RESOURCE_GROUP }}
           region: ${{ vars.LOCATION }}
-          template: ./bicep/main.bicep
-          parameters: ./bicep/main.parameters.json containerRegistryName= backendProcessorServiceImage=${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }}:latest backendApiServiceImage=${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }}:latest frontendWebAppServiceImage=${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest
+          template: ./infra/bicep/main.bicep
+          parameters: ./infra/bicep/main.parameters.json containerRegistryName= backendProcessorServiceImage=${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }}:latest backendApiServiceImage=${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }}:latest frontendWebAppServiceImage=${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest
           failOnStdErr: false
 
   # This job deletes the resource group created by the workflow and can only be triggered by the workflow dispatch event.
