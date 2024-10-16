@@ -14,6 +14,10 @@ parameters:
     displayName: Should teardown infrastructure?
     type: boolean
     default: false
+  - name: InstanceName
+    displayName: Instance Name
+    type: string
+    default: "005"
 
 pool:
   vmImage: "ubuntu-latest"
@@ -27,7 +31,9 @@ variables:
     value: azure/tasksmanager-frontend-webapp
   - name: BACKEND_PROCESSOR_IMAGE_NAME
     value: azure/tasksmanager-backend-processor
-  - group: "WRKSHP_AcaApp"
+  - name: InstanceName
+    value: ${{ parameters.InstanceName }}
+  - group: "WRKSHP_AcaApp_${{ parameters.InstanceName }}"
 
 stages:
   - stage: Lint
@@ -81,7 +87,7 @@ stages:
               location: $(LOCATION)
               templateLocation: "Linked artifact"
               csmFile: "infra/bicep/main.bicep"
-              csmParametersFile: "infra/bicep/main.parameters.json"
+              csmParametersFile: "infra/bicep/main.parameters-$(InstanceName).json"
               deploymentMode: "Validation"
 
   - stage: Deploy
@@ -103,7 +109,7 @@ stages:
               location: "$(LOCATION)"
               templateLocation: "Linked artifact"
               csmFile: "infra/bicep/main.bicep"
-              csmParametersFile: "infra/bicep/main.parameters.json"
+              csmParametersFile: "infra/bicep/main.parameters-$(InstanceName).json"
               #overrideParameters: '-containerRegistryName "$(CONTAINER_REGISTRY_NAME)" -backendProcessorServiceImage "$(REGISTRY)/$(BACKEND_PROCESSOR_IMAGE_NAME):latest" -backendApiServiceImage "$(REGISTRY)/$(BACKEND_API_IMAGE_NAME):latest" -frontendWebAppServiceImage "$(REGISTRY)/$(FRONTEND_APP_IMAGE_NAME):latest"'
               deploymentMode: "Incremental"
               deploymentName: "azdo-deploy-$(Build.BuildId)"
@@ -114,6 +120,7 @@ stages:
               scriptType: "pscore"
               scriptLocation: "scriptPath"
               scriptPath: "$(System.DefaultWorkingDirectory)/deploy.ps1"
+              arguments: "-InstanceName $(InstanceName)"
   - stage: Create_Import_ACR
     displayName: Create Azure Container Registry if needed
     dependsOn: Validate
@@ -181,7 +188,7 @@ stages:
               location: $(LOCATION)
               templateLocation: "Linked artifact"
               csmFile: "infra/bicep/main.bicep"
-              csmParametersFile: "infra/bicep/main.parameters.json"
+              csmParametersFile: "infra/bicep/main.parameters-$(InstanceName).json"
               overrideParameters: '-containerRegistryName "$(CONTAINER_REGISTRY_NAME)" -backendProcessorServiceImage "$(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-backend-processor:latest" -backendApiServiceImage "$(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-backend-api:latest" -frontendWebAppServiceImage "$(CONTAINER_REGISTRY_NAME).azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest"'
               deploymentMode: "Incremental"
               deploymentName: "azdo-deploy-$(Build.BuildId)"
@@ -192,6 +199,7 @@ stages:
               scriptType: "pscore"
               scriptLocation: "scriptPath"
               scriptPath: "$(System.DefaultWorkingDirectory)/deploy.ps1"
+              arguments: "-InstanceName $(InstanceName)"
 
   - stage: Teardown
     displayName: Teardown infrastructure

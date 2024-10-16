@@ -1,4 +1,9 @@
-$RESOURCE_GROUP = "rg-aca-workshop-003"
+param (
+    [Parameter()]
+    [string] $InstanceName = "005"
+)
+
+$RESOURCE_GROUP = "rg-aca-workshop-$InstanceName"
 $LOCATION = "eastus2"
 $addCosmosDbRole = $false # Add Cosmos DB Role - for INTERACTIVE LOGIN ONLY
 
@@ -40,16 +45,16 @@ az acr build --registry $CONTAINER_REGISTRY_NAME `
 # read main.parameters.template.json file and update the container registry name
 $parameters = Get-Content "infra/bicep/main.parameters.template.json" -Raw
 $parameters = $parameters -replace "__CONTAINER_REGISTRY_NAME__", $CONTAINER_REGISTRY_NAME
-$parameters | Set-Content "infra/bicep/main.parameters.json"
+$parameters | Set-Content "infra/bicep/main.parameters-$InstanceName.json"
 
 Write-Output "Parameters file updated with Container Registry Name"
-Get-Content "infra/bicep/main.parameters.json"
+Get-Content "infra/bicep/main.parameters-$InstanceName.json"
 
 Write-Output "Creating Container App Service Plan"
 az deployment group create `
     --resource-group $RESOURCE_GROUP `
     --template-file "infra/bicep/main.bicep" `
-    --parameters "infra/bicep/main.parameters.json"
+    --parameters "infra/bicep/main.parameters-$InstanceName.json"
 
 Write-Output "Deployment Completed"
 
