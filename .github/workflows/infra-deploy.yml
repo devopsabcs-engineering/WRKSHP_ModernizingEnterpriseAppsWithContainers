@@ -172,6 +172,9 @@ jobs:
       - name: Import images from GitHub Container Registry
         if: true
         uses: azure/CLI@v1
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
         with:
           inlineScript: |
             # enable admin account for ACR
@@ -183,7 +186,9 @@ jobs:
             echo "ACR password: $ACR_PASSWORD"
             # set acr password as secret using GitHub API
             echo "Setting ACR password as secret in GitHub"
-            gh secret set ACR_PASSWORD -b "${ACR_PASSWORD}" -r ${{ github.repository }}
+            variableName="ACR_PASSWORD"
+            Write-Host "Creating secret $variableName in repository ${{env.OWNER}}/${{env.REPO}}"
+            gh secret set $variableName --repo "${{env.OWNER}}/${{env.REPO}}" --body "$ACR_PASSWORD"
 
       # docker login to ACR using the ACR password secret
       - name: Docker login to ACR
