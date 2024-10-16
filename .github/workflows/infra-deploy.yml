@@ -186,7 +186,7 @@ jobs:
             echo "ACR password: $ACR_PASSWORD"
             # set acr password as secret using GitHub API
             echo "Setting ACR password as secret in GitHub"
-            Write-Host "Creating secret ACR_PASSWORD in repository ${{env.OWNER}}/${{env.REPO}}"
+            echo "Creating secret ACR_PASSWORD in repository ${{env.OWNER}}/${{env.REPO}}"
             gh secret set ACR_PASSWORD --repo "${{env.OWNER}}/${{env.REPO}}" --body "$ACR_PASSWORD"
 
       # docker login to ACR using the ACR password secret
