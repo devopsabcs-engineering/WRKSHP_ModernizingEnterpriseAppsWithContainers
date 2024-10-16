@@ -172,8 +172,12 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
+            # get the ACR login server password
+            ACR_PASSWORD=$(az acr credential show --name ${{ vars.CONTAINER_REGISTRY_NAME }} --query "passwords[0].value" -o tsv)
+            # login to ACR
+            docker login ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io -u ${{ vars.CONTAINER_REGISTRY_NAME }} -p $ACR_PASSWORD
             #az acr login --name ${{ vars.CONTAINER_REGISTRY_NAME }}
-            az acr login --name ${{ vars.CONTAINER_REGISTRY_NAME }}
+            #az acr login --name ${{ vars.CONTAINER_REGISTRY_NAME }}
             docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest
             docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:${{ github.sha }}
             docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-api:latest
