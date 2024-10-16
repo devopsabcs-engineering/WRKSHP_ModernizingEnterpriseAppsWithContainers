@@ -181,8 +181,10 @@ jobs:
             echo "Getting ACR login server password"
             ACR_PASSWORD=$(az acr credential show --name ${{ vars.CONTAINER_REGISTRY_NAME }} --query "passwords[0].value" -o tsv)
             echo "ACR password: $ACR_PASSWORD"
-            # set acr password as secret
-            echo "::set-env name=ACR_PASSWORD::$ACR_PASSWORD"
+            # set acr password as secret using GitHub API
+            echo "Setting ACR password as secret in GitHub"
+            gh secret set ACR_PASSWORD -b "${ACR_PASSWORD}" -r ${{ github.repository }}
+
       # docker login to ACR using the ACR password secret
       - name: Docker login to ACR
         uses: azure/docker-login@v2
