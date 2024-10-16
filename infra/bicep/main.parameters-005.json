@@ -58,5 +58,14 @@
     },
     "disableLocalAuth": {
         "value": false
+    },
+    "frontendWebAppPortNumber": {
+        "value": 5000
+    },
+    "backendApiPortNumber": {
+        "value": 5000
+    },
+    "backendProcessorPortNumber": {
+        "value": 5000
     }
 }

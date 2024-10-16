@@ -60,12 +60,12 @@
         "value": false
     },
     "frontendWebAppPortNumber": {
-        "value": 80
+        "value": 5000
     },
     "backendApiPortNumber": {
-        "value": 80
+        "value": 5000
     },
     "backendProcessorPortNumber": {
-        "value": 80
+        "value": 5000
     }
 }
