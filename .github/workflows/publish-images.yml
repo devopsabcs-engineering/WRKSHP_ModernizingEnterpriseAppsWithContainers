@@ -5,9 +5,9 @@ on:
     branches:
       - main
     paths:
-      - 'TasksTracker.Processor.Backend.Svc/**'
-      - 'TasksTracker.TasksManager.Backend.Api/**'
-      - 'TasksTracker.WebPortal.Frontend.Ui/**'
+      - 'src/TasksTracker.Processor.Backend.Svc/**'
+      - 'src/TasksTracker.TasksManager.Backend.Api/**'
+      - 'src/TasksTracker.WebPortal.Frontend.Ui/**'
       - '.github/workflows/publish-images.yml'
   workflow_dispatch: {}
 
