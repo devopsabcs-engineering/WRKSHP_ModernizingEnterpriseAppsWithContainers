@@ -22,7 +22,7 @@ permissions:
   id-token: write
   contents: read
   # push and pull access to GitHub Container Registry
-  packages: write
+  #packages: write use PAT for read access
 
 env:
   REGISTRY: ghcr.io
@@ -133,7 +133,7 @@ jobs:
             fi
       # login to GitHub Container Registry
       - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       # Import images from GitHub Container Registry
       - name: Import images from GitHub Container Registry
         uses: azure/CLI@v1
