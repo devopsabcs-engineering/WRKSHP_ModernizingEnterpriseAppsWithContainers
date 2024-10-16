@@ -51,9 +51,9 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2024-03-01'
   name: containerAppsEnvironmentName
   location: location
   tags: tags
-  sku: {
-    name: 'Consumption'
-  }
+  // sku: {
+  //   name: 'Consumption'
+  // }
   properties: {
     daprAIInstrumentationKey: applicationInsights.properties.InstrumentationKey
     appLogsConfiguration: {
