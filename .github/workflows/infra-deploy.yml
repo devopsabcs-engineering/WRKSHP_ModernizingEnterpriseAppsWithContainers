@@ -169,6 +169,11 @@ jobs:
         if: false
         name: Push images to ACR
       # Import images from GitHub Container Registry
+      - run: echo "REPO_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
+      - run: echo "ORG_NAME=${{ github.repository_owner }}" >> $GITHUB_ENV
+      # echo these environment variables to the console
+      - run: echo "REPO_NAME=${{ env.REPO_NAME }}"
+      - run: echo "ORG_NAME=${{ env.ORG_NAME }}"
       - name: Import images from GitHub Container Registry
         if: true
         uses: azure/CLI@v1
@@ -184,11 +189,16 @@ jobs:
             echo "Getting ACR login server password"
             ACR_PASSWORD=$(az acr credential show --name ${{ vars.CONTAINER_REGISTRY_NAME }} --query "passwords[0].value" -o tsv)
             echo "ACR password: $ACR_PASSWORD"
-            # set acr password as secret using GitHub API
-            echo "Setting ACR password as secret in GitHub"
-            echo "Creating secret ACR_PASSWORD in repository ${{env.OWNER}}/${{env.REPO}}"
-            gh secret set ACR_PASSWORD --repo "${{env.OWNER}}/${{env.REPO}}" --body "$ACR_PASSWORD"
-
+            echo "ACR_PASSWORD=$ACR_PASSWORD" >> $GITHUB_ENV
+      # echo the ACR password to the console
+      - run: echo "ACR_PASSWORD=${{ env.ACR_PASSWORD }}"
+      # set the ACR password as a secret
+      - name: Set ACR password as a secret
+        run: |
+          # set acr password as secret using GitHub API
+          echo "Setting ACR password of ${{ env.ACR_PASSWORD }} as secret in GitHub"
+          echo "Creating secret ACR_PASSWORD in repository ${{env.OWNER}}/${{env.REPO}}"
+          gh secret set ACR_PASSWORD --repo "${{env.OWNER}}/${{env.REPO}}" --body "${{ env.ACR_PASSWORD }}"
       # docker login to ACR using the ACR password secret
       - name: Docker login to ACR
         uses: azure/docker-login@v2
