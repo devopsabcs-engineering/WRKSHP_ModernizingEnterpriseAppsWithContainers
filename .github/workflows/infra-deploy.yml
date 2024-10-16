@@ -138,6 +138,15 @@ jobs:
           docker pull ${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }}:latest
           docker pull ${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }}:latest
           docker pull ${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest
+      - uses: azure/docker-login@v2
+        with:
+          login-server: ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io
+          username: ${{ vars.CONTAINER_REGISTRY_NAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}      
+      - run: |
+          docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:${{ github.sha }}
+          docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-api:${{ github.sha }}
+          docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:${{ github.sha }}
       # login to Azure Container Registry
       - name: Login to Azure Container Registry
         uses: azure/CLI@v1
