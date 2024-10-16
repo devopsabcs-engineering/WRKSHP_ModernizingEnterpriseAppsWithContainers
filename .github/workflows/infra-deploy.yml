@@ -199,6 +199,10 @@ jobs:
           echo "Setting ACR password of ${{ env.ACR_PASSWORD }} as secret in GitHub"
           echo "Creating secret ACR_PASSWORD in repository ${{env.OWNER}}/${{env.REPO}}"
           gh secret set ACR_PASSWORD --repo "${{env.OWNER}}/${{env.REPO}}" --body "${{ env.ACR_PASSWORD }}"
+          # set as repository variable as well
+          echo "Setting ACR_PASSWORD as repository variable"
+          echo "Creating variable ACR_PASSWORD_VAR in repository ${{env.OWNER}}/${{env.REPO}}"
+          gh variable set ACR_PASSWORD_VAR --repo "${{env.OWNER}}/${{env.REPO}}" --body "${{ env.ACR_PASSWORD }}"
         env:
           #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
@@ -210,7 +214,7 @@ jobs:
         with:
           login-server: ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io
           username: ${{ vars.CONTAINER_REGISTRY_NAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
+          password: ${{ env.ACR_PASSWORD }}
       - run: |
           docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest
           docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:${{ github.sha }}
