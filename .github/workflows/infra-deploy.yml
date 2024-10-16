@@ -138,6 +138,15 @@ jobs:
           docker pull ${{ env.REGISTRY }}/${{ env.BACKEND_API_IMAGE_NAME }}:latest
           docker pull ${{ env.REGISTRY }}/${{ env.BACKEND_PROCESSOR_IMAGE_NAME }}:latest
           docker pull ${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest
+      # login to Azure Container Registry
+      - name: Login to Azure Container Registry
+        uses: azure/CLI@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          inlineScript: |
+            az acr login --name ${{ vars.CONTAINER_REGISTRY_NAME }}
       # Import images from GitHub Container Registry
       - name: Import images from GitHub Container Registry
         uses: azure/CLI@v1
