@@ -24,6 +24,11 @@ az acr create `
     --name $CONTAINER_REGISTRY_NAME `
     --sku Basic
 
+Write-Output "Azure Container Registry Created"
+# enable admin user
+Write-Output "Enabling Admin User on ACR"
+az acr update --name $CONTAINER_REGISTRY_NAME --admin-enabled true
+
 ## Build Backend API on ACR and Push to ACR
 Write-Output "Building Backend API on ACR and Push to ACR"
 az acr build --registry $CONTAINER_REGISTRY_NAME `
