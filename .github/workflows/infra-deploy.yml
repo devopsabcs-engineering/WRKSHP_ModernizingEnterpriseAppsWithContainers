@@ -199,6 +199,11 @@ jobs:
           echo "Setting ACR password of ${{ env.ACR_PASSWORD }} as secret in GitHub"
           echo "Creating secret ACR_PASSWORD in repository ${{env.OWNER}}/${{env.REPO}}"
           gh secret set ACR_PASSWORD --repo "${{env.OWNER}}/${{env.REPO}}" --body "${{ env.ACR_PASSWORD }}"
+        env:
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
       # docker login to ACR using the ACR password secret
       - name: Docker login to ACR
         uses: azure/docker-login@v2
