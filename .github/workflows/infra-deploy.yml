@@ -152,13 +152,6 @@ jobs:
           docker tag ${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:latest
           # tag the image with the ACR name with the sha
           docker tag ${{ env.REGISTRY }}/${{ env.FRONTEND_APP_IMAGE_NAME }}:latest ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-frontend-webapp:${{ github.sha }}
-      - uses: azure/docker-login@v2
-        name: Login to ACR
-        if: false
-        with:
-          login-server: ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io
-          username: ${{ vars.CONTAINER_REGISTRY_NAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
           docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest
           docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:${{ github.sha }}
@@ -193,18 +186,17 @@ jobs:
       # echo the ACR password to the console
       - run: echo "ACR_PASSWORD=${{ env.ACR_PASSWORD }}"
       # set the ACR password as a secret
-      - name: Set ACR password as a secret
+      - name: Set ACR password as a secret (and repository variable)
         run: |
           # set acr password as secret using GitHub API
           echo "Setting ACR password of ${{ env.ACR_PASSWORD }} as secret in GitHub"
           echo "Creating secret ACR_PASSWORD in repository ${{env.OWNER}}/${{env.REPO}}"
           gh secret set ACR_PASSWORD --repo "${{env.OWNER}}/${{env.REPO}}" --body "${{ env.ACR_PASSWORD }}"
           # set as repository variable as well
-          echo "Setting ACR_PASSWORD as repository variable"
-          echo "Creating variable ACR_PASSWORD_VAR in repository ${{env.OWNER}}/${{env.REPO}}"
-          gh variable set ACR_PASSWORD_VAR --repo "${{env.OWNER}}/${{env.REPO}}" --body "${{ env.ACR_PASSWORD }}"
+          #echo "Setting ACR_PASSWORD as repository variable"
+          #echo "Creating variable ACR_PASSWORD_VAR in repository ${{env.OWNER}}/${{env.REPO}}"
+          #gh variable set ACR_PASSWORD_VAR --repo "${{env.OWNER}}/${{env.REPO}}" --body "${{ env.ACR_PASSWORD }}"
         env:
-          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
@@ -214,7 +206,7 @@ jobs:
         with:
           login-server: ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io
           username: ${{ vars.CONTAINER_REGISTRY_NAME }}
-          password: ${{ env.ACR_PASSWORD }}
+          password: ${{ env.ACR_PASSWORD }} # so, don't need to store the password in the repository as a secret
       - run: |
           docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:latest
           docker push ${{ vars.CONTAINER_REGISTRY_NAME }}.azurecr.io/tasksmanager/tasksmanager-backend-processor:${{ github.sha }}
