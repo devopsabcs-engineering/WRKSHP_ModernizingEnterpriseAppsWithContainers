@@ -1,6 +1,16 @@
-# Azure Container Apps Workshop
+# Workshop for Modernizing Enterprise Apps with Containers
+
+Emmanuel Knafo
+
+Cloud Solution Architect
+
+Microsoft
+
+## Azure Container Apps Workshop
 
 https://azure.github.io/aca-dotnet-workshop/
+
+[Wiki](https://github.com/devopsabcs-engineering/WRKSHP_ModernizingEnterpriseAppsWithContainers/wiki)
 
 There is no doubt that building containerized applications and following a microservices architecture is one of the most common software architecture patterns observed in the past couple of years.
 
